@@ -1,5 +1,5 @@
 defmodule Day1 do
-  @part1_input_path "./day1p1.input"
+  @part1_input_path "./day1.input"
 
   def part1 do
     File.stream!(@part1_input_path)
