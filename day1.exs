@@ -1,9 +1,8 @@
 defmodule Day1 do
   @part1_input_path "./day1.input"
 
-  def part1 do
-    File.stream!(@part1_input_path)
-    |> Enum.reduce(0, fn feq, acc ->
+  def part1(inputs) do
+    Enum.reduce(inputs, 0, fn feq, acc ->
       String.trim(feq, "\n")
       |> String.to_integer()
       |> Kernel.+(acc)
@@ -24,6 +23,10 @@ defmodule Day1 do
     File.read!(@part1_input_path)
     |> String.split("\n")
   end
+
+  def load_input_stream do
+    File.stream!(@part1_input_path)
+  end
 end
 
 ExUnit.start()
@@ -32,7 +35,7 @@ defmodule Day1Test do
   use ExUnit.Case, async: true
 
   test "device final frequency correct" do
-    assert 439 === Day1.part1()
+    assert 439 === (Day1.load_input_stream() |> Day1.part1())
   end
 
   test "device the first frequency reached twice correct" do
