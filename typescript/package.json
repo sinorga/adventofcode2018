@@ -1,0 +1,23 @@
+{
+  "name": "adventofcode2018",
+  "version": "1.0.0",
+  "description": "https://adventofcode.com/2018",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc; node ./dist/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinorga/adventofcode2018.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sinorga/adventofcode2018/issues"
+  },
+  "homepage": "https://github.com/sinorga/adventofcode2018#readme",
+  "devDependencies": {
+    "@types/node": "^10.12.11"
+  }
+}

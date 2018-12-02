@@ -5,3 +5,5 @@ do
     echo "Run $f"
     elixir $f
 done
+
+cd typescript; npm run test; cd -
