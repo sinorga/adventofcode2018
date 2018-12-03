@@ -1,9 +1,4 @@
 #!bin/sh
 
-for f in $(ls *.exs);
-do
-    echo "Run $f"
-    elixir $f
-done
-
+cd elixir; mix test; cd -
 cd typescript; npm run test; cd -

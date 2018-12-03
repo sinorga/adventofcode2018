@@ -1,5 +1,6 @@
 defmodule Day2 do
-  @input_path "./day2.input"
+  @input_file "day2.input"
+  use FileUtil
 
   @spec checksum(list(String.t()), integer(), integer()) :: integer()
   def checksum(inputs, twice_num \\ 0, thrice_num \\ 0)
@@ -35,50 +36,4 @@ defmodule Day2 do
   defp correct_box_id(<<_::utf8, id1::binary>>, <<_::utf8, id2::binary>>, common, diff) do
     correct_box_id(id1, id2, common, diff + 1)
   end
-
-  def load_input do
-    File.read!(@input_path)
-    |> String.split("\n")
-  end
-
-  def load_input_stream do
-    File.stream!(@input_path)
-  end
-end
-
-ExUnit.start()
-
-defmodule Day2Test do
-  use ExUnit.Case, async: true
-
-  test "checksum correct" do
-    inputs = [
-      "abcdef",
-      "bababc",
-      "abbcde",
-      "abcccd",
-      "aabcdd",
-      "abcdee",
-      "ababab"
-    ]
-    assert 12 === Day2.checksum(inputs)
-
-    assert 5681 === Day2.load_input() |> Day2.checksum()
-  end
-
-  test "common letter correct" do
-    inputs = [
-      "abcde",
-      "fghij",
-      "klmno",
-      "pqrst",
-      "fguij",
-      "axcye",
-      "wvxyz"
-    ]
-
-    assert "fgij" == Day2.common_letter(inputs)
-    assert "uqyoeizfvmbistpkgnocjtwld" == Day2.load_input() |> Day2.common_letter()
-  end
-
 end

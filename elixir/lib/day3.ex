@@ -1,5 +1,6 @@
 defmodule Day3 do
-  @input_path "./day3.input"
+  @input_file "day3.input"
+  use FileUtil
 
   def overlapped_num(inputs) do
     fabric_area = claim_fabric(inputs)
@@ -57,42 +58,5 @@ defmodule Day3 do
         fabric_area[row_pos][col_pos] > 1
       end)
     end)
-  end
-
-  def load_input do
-    File.read!(@input_path)
-    |> String.split("\n", trim: true)
-  end
-
-  def load_input_stream do
-    File.stream!(@input_path)
-  end
-end
-
-ExUnit.start()
-
-defmodule Day2Test do
-  use ExUnit.Case, async: true
-
-  test "number of overlapped fabric correct" do
-    inputs = [
-      "#1 @ 1,3: 4x4",
-      "#2 @ 3,1: 4x4",
-      "#3 @ 5,5: 2x2"
-    ]
-
-    assert 4 === Day3.overlapped_num(inputs)
-    assert 110_891 === Day3.load_input() |> Day3.overlapped_num()
-  end
-
-  test "claim id without overlapping" do
-    inputs = [
-      "#1 @ 1,3: 4x4",
-      "#2 @ 3,1: 4x4",
-      "#3 @ 5,5: 2x2"
-    ]
-
-    assert 3 === Day3.claim_id_without_overlap(inputs)
-    assert 297 === Day3.load_input() |> Day3.claim_id_without_overlap()
   end
 end
