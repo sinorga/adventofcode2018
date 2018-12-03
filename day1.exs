@@ -19,6 +19,23 @@ defmodule Day1 do
     end
   end
 
+  # Another solution with stream.cycle and reduce_while for large data set.
+  def part2_stream(stream) do
+    {freq, _} =
+      Stream.cycle(stream)
+      |> Enum.reduce_while({0, MapSet.new([0])}, &check_first_twice_freq/2)
+    freq
+  end
+
+  defp check_first_twice_freq(delta_freq, {freq, history}) do
+    new_freq = freq + String.to_integer(input)
+    if MapSet.member?(history, new_freq) do
+      {:halt, {new_freq, history}}
+    else
+      {:cont, {new_freq, MapSet.put(history, new_acc)}}
+    end
+  end
+
   def load_input do
     File.read!(@part1_input_path)
     |> String.split("\n")
@@ -44,5 +61,6 @@ defmodule Day1Test do
     assert 5 === Day1.part2(["-6", "+3", "+8", "+5", "-6"])
     assert 14 === Day1.part2(["+7", "+7", "-2", "-7", "-4"])
     assert 124645 === (Day1.load_input() |> Day1.part2())
+    assert 124645 === (Day1.load_input_stream() |> Day1.part2_stream())
   end
 end
