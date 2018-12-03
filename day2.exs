@@ -29,10 +29,10 @@ defmodule Day2 do
   defp correct_box_id(id1, id2, common \\ "", diff \\ 0)
   defp correct_box_id(_, _, _, 2), do: false
   defp correct_box_id("", "", common, 1), do: common
-  defp correct_box_id(<<c1::size(8), id1::binary>>, <<c1::size(8), id2::binary>>, common, diff) do
+  defp correct_box_id(<<c1::utf8, id1::binary>>, <<c1::utf8, id2::binary>>, common, diff) do
     correct_box_id(id1, id2, <<common::binary, c1>>, diff)
   end
-  defp correct_box_id(<<_::size(8), id1::binary>>, <<_::size(8), id2::binary>>, common, diff) do
+  defp correct_box_id(<<_::utf8, id1::binary>>, <<_::utf8, id2::binary>>, common, diff) do
     correct_box_id(id1, id2, common, diff + 1)
   end
 
