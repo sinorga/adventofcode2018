@@ -1,5 +1,6 @@
 defmodule Day3Test do
   use ExUnit.Case, async: true
+  doctest Day3
 
   test "number of overlapped fabric correct" do
     inputs = [

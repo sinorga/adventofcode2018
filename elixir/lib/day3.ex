@@ -2,15 +2,23 @@ defmodule Day3 do
   @input_file "day3.input"
   use FileUtil
 
-  def overlapped_num(inputs) do
-    fabric_area = claim_fabric(inputs)
+  @doc """
+  Calculate number of overlapped fabric
 
-    Map.values(fabric_area)
-    |> Enum.reduce(0, fn row_map, acc ->
-      Map.values(row_map)
-      |> Enum.count(&(&1 > 1))
-      |> Kernel.+(acc)
-    end)
+  ## Examples
+
+      iex(1)> Day3.overlapped_num([
+      ...(1)>         "#1 @ 1,3: 4x4",
+      ...(1)>         "#2 @ 3,1: 4x4",
+      ...(1)>         "#3 @ 5,5: 2x2"
+      ...(1)>       ])
+      4
+  """
+  @spec overlapped_num([String.t()]) :: integer()
+  def overlapped_num(inputs) do
+    claim_fabric(inputs)
+    |> Map.values()
+    |> Enum.count(&(&1 > 1))
   end
 
   defp claim_fabric(claims, fabric_area \\ %{})
@@ -19,12 +27,12 @@ defmodule Day3 do
   defp claim_fabric([claim | claims], fabric_area) do
     [_, left_edge, top_edge, wide, tall] = extract_claim(claim)
 
+    # ETS can be faster.
     new_fabric_area =
       Enum.reduce(top_edge..(top_edge + tall - 1), fabric_area, fn row_pos, fabric_area ->
         Enum.reduce(left_edge..(left_edge + wide - 1), fabric_area, fn col_pos, fabric_area ->
-          Map.update(fabric_area, row_pos, %{col_pos => 1}, fn row_map ->
-            Map.update(row_map, col_pos, 1, &(&1 + 1))
-          end)
+          # Learning: use {x, y} as a key to prevent deep nested map
+          Map.update(fabric_area, {row_pos, col_pos}, 1, &(&1 + 1))
         end)
       end)
 
@@ -32,8 +40,10 @@ defmodule Day3 do
   end
 
   defp extract_claim(claim) do
-    Regex.run(~r/^#(\d+) @ (\d+),(\d+): (\d+)x(\d+)$/, claim)
-    |> List.delete_at(0)
+    claim
+    # Learning use split instead of regex
+    # Anotehr faster solution: https://github.com/plataformatec/nimble_parsec
+    |> String.split(["#", " @ ", ",", ": ", "x"], trim: true)
     |> Enum.map(&String.to_integer/1)
   end
 
@@ -55,7 +65,7 @@ defmodule Day3 do
   defp claim_overlapped?([left_edge, top_edge, wide, tall], fabric_area) do
     Enum.any?(top_edge..(top_edge + tall - 1), fn row_pos ->
       Enum.any?(left_edge..(left_edge + wide - 1), fn col_pos ->
-        fabric_area[row_pos][col_pos] > 1
+        fabric_area[{row_pos, col_pos}] > 1
       end)
     end)
   end
