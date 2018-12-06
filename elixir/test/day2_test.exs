@@ -11,6 +11,7 @@ defmodule Day2Test do
       "abcdee",
       "ababab"
     ]
+
     assert 12 === Day2.checksum(inputs)
 
     assert 5681 === Day2.load_input() |> Day2.checksum()
@@ -30,5 +31,4 @@ defmodule Day2Test do
     assert "fgij" == Day2.common_letter(inputs)
     assert "uqyoeizfvmbistpkgnocjtwld" == Day2.load_input() |> Day2.common_letter()
   end
-
 end

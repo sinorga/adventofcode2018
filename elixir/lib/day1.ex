@@ -11,8 +11,10 @@ defmodule Day1 do
   end
 
   def part2(inputs, acc \\ 0, history \\ MapSet.new([0]))
-  def part2([input|inputs], acc, history) do
+
+  def part2([input | inputs], acc, history) do
     new_acc = acc + String.to_integer(input)
+
     if MapSet.member?(history, new_acc) do
       new_acc
     else
@@ -25,6 +27,7 @@ defmodule Day1 do
     {freq, _} =
       Stream.cycle(stream)
       |> Enum.reduce_while({0, MapSet.new([0])}, &check_first_twice_freq/2)
+
     freq
   end
 
@@ -33,14 +36,11 @@ defmodule Day1 do
       String.trim(delta_freq, "\n")
       |> String.to_integer()
       |> Kernel.+(freq)
+
     if MapSet.member?(history, new_freq) do
       {:halt, {new_freq, history}}
     else
       {:cont, {new_freq, MapSet.put(history, new_freq)}}
     end
   end
-
-
 end
-
-

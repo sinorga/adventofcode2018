@@ -1,8 +1,11 @@
 defmodule FileUtil do
   defmacro __using__(_args) do
     quote do
-      def load_input do
+      def load_input_raw do
         File.read!("#{File.cwd!()}/../#{@input_file}")
+      end
+      def load_input do
+        load_input_raw()
         |> String.split("\n")
       end
 

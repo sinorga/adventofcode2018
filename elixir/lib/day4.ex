@@ -15,6 +15,7 @@ defmodule Day4 do
 
   def part2(posts) do
     guard_info = parse_posts(posts)
+
     {guard_id, minute, _} =
       Enum.reduce(1..59, {nil, 0, 0}, fn minute, acc ->
         Enum.reduce(guard_info, acc, fn {_, guard_info}, {_, _sleepy_minute, num} = acc ->

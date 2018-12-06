@@ -1,5 +1,6 @@
 defmodule Day4Test do
   use ExUnit.Case, async: true
+
   setup %{} do
     inputs = [
       "[1518-11-01 00:00] Guard #10 begins shift",
@@ -20,11 +21,12 @@ defmodule Day4Test do
       "[1518-11-05 00:45] falls asleep",
       "[1518-11-05 00:55] wakes up"
     ]
+
     {:ok, example_input: inputs}
   end
+
   describe "find guard that has the most minutes asleep. What minute does that guard spend asleep the most" do
     test "guard id multipy minute from example", ctx do
-
       assert 240 == Day4.part1(ctx.example_input)
     end
 
