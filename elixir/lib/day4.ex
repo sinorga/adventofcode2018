@@ -2,7 +2,7 @@ defmodule Day4 do
   @input_file "day4.input"
   use FileUtil
 
-  def guard_id_multiply_minute(posts) do
+  def part1(posts) do
     guard =
       parse_posts(posts)
       |> Map.values()
@@ -11,6 +11,22 @@ defmodule Day4 do
     Enum.max_by(guard.sleep_slot_acc, fn {_, num} -> num end)
     |> elem(0)
     |> Kernel.*(guard.guard_id)
+  end
+
+  def part2(posts) do
+    guard_info = parse_posts(posts)
+    {guard_id, minute, _} =
+      Enum.reduce(1..59, {nil, 0, 0}, fn minute, acc ->
+        Enum.reduce(guard_info, acc, fn {_, guard_info}, {_, _sleepy_minute, num} = acc ->
+          if (guard_info.sleep_slot_acc[minute] || 0) > num do
+            {guard_info.guard_id, minute, guard_info.sleep_slot_acc[minute]}
+          else
+            acc
+          end
+        end)
+      end)
+
+    guard_id * minute
   end
 
   defp parse_posts(posts) do
