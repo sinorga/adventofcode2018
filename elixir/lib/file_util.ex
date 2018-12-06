@@ -4,6 +4,7 @@ defmodule FileUtil do
       def load_input_raw do
         File.read!("#{File.cwd!()}/../#{@input_file}")
       end
+
       def load_input do
         load_input_raw()
         |> String.split("\n")
