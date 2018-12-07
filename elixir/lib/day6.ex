@@ -42,6 +42,36 @@ defmodule Day6 do
     |> Enum.max()
   end
 
+  @doc """
+  Part2 question, the size of the region containing all locations which have a total distance to all given coordinates of less than 10000?
+
+      iex> Day6.all_location_area([
+      ...>  "1, 1",
+      ...>  "1, 6",
+      ...>  "8, 3",
+      ...>  "3, 4",
+      ...>  "5, 5",
+      ...>  "8, 9"
+      ...> ], 32)
+      16
+  """
+  def all_location_area(inputs, total_distance) when is_list(inputs) do
+    coordinates = parse_coords(inputs)
+    {x_range, y_range} = find_corners(coordinates)
+
+    points =
+      for x <- x_range,
+          y <- y_range,
+          distance_less_threshold?({x, y}, coordinates, total_distance),
+          do: {x, y}
+
+    length(points)
+  end
+
+  defp distance_less_threshold?(point, coordinates, total_distance) do
+    Enum.reduce(coordinates, 0, &(manhattan_distance(&1, point) + &2)) < total_distance
+  end
+
   defp parse_coords(coords) do
     Enum.map(coords, fn coord ->
       String.split(coord, ", ")
